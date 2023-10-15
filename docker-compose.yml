@@ -1,0 +1,26 @@
+services:
+#########################
+#### syslog2mqtt
+  syslog2mqtt:
+    container_name: syslog2mqtt
+    image: gelse/syslog2mqtt
+    build:
+      context: syslog2mqtt
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vienna
+      - MQTT_SERVER=<<mqtt server>>
+      - MQTT_PORT=<<mqtt server port, defaults to 1883>>
+      - MQTT_CLIENTID=<<mqtt client id, defaults to syslog2mqtt>>
+      - MQTT_USERNAME=<<mqtt username>>
+      - MQTT_PASSWORD=<<mqtt password>>
+      - MQTT_TOPIC=<<mqtt base topic, defaults to syslog2mqtt/data>>
+      - MQTT_RETAIN=<y|n, defaults to no>
+      - MQTT_VERBOSE=<<y|n, defaults to no>
+
+    ports:
+      - 514:514
+      - 514:514/udp
